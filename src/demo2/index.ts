@@ -87,3 +87,73 @@ data = ['data', 10]
   let list: any[] = [1, 'hello', false]
   list[1] = 100
 }
+
+/**
+ * 8、Void
+ * 表示没有任何类型，当一个函数没有返回值时，其返回值类型就是Void
+ */
+{
+  function warnUser(): void {
+    console.log('wrong message')
+  }
+}
+
+/**
+ * Null和undefined
+ * 默认情况下null和undefined是所有类型的子类型，可以将null或undefined赋值给number类型
+ * 当指定了 --strictNullChecks标记，null和undefined只能赋值给void和他们各自
+ */
+
+/**
+ * 9、Never
+ * never类型表示的是那些用不存在的值的类型
+ * 是那些总会抛出异常或根本不好有返回值的函数表达式或箭头函数表达式的返回值类型
+ */
+{
+  // 返回never的函数必须存在无法到达的终点
+  function error(message: string): never {
+    throw new Error(message)
+  }
+
+  // 推断的返回值为never
+  function fail () {
+    return error('something failed')
+  }
+
+  // 返回never的函数必须存在无法到达的终点
+  function infiniteLoop(): never {
+    while(true) {
+    }
+  }
+}
+
+/**
+ * 10、Object
+ * 表示非原始类型，也就是除了number, string, boolean, symbol, null 或 undefined之外的类型
+ */
+// 使用object类型，可以更好的表示Object.create这样的API
+declare function create(o: object | null): void
+
+create({ prop: 0 })
+create(null)
+
+// create(43) // Error
+// create('hello') // Error
+// create(false) // Error
+// create(undefined) // Error
+
+/**
+ * 11、类型断言
+ * 当你清楚的知道一个实体具有比他现有类型更确切的类型
+ * 通过类型断言告诉编译器，“相信我，我知道自己在干什么”
+ * 好比是其他语言里的类型转换，但不进行特殊的数据检查和解构，只在编译阶段起作用
+ */
+
+ // 形式一：尖括号
+ let someValue: any = 'this is a string'
+ let strLen: number = (<string>someValue).length
+
+ // 形式二：as语法
+ let len: number = (someValue as string).length
+
+ // 注：两种形式等价，如果在TypeScript里使用JSX时，只能使用as语法

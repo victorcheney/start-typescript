@@ -60,5 +60,70 @@ data = ['data', 10];
     console.log(c);
     // 根据枚举值获取到名字
     var colorName = Color[9];
-    console.log('colorName:', colorName);
+    console.log('colorName:', colorName); // colorName: Blue
 }
+/**
+ * 7、Any
+ * 不清楚某一个变量的值类型时，不希望类型检查其对这些值进行检查而直接让他们通过编译阶段
+ * 在迁移旧代码时很有用
+ */
+{
+    var test = 4;
+    test = false;
+    test = 'hello';
+    // 只知道一部分类型(一个不知道类型的数组，包含不同类型的数据)
+    var list_1 = [1, 'hello', false];
+    list_1[1] = 100;
+}
+/**
+ * 8、Void
+ * 表示没有任何类型，当一个函数没有返回值时，其返回值类型就是Void
+ */
+{
+    function warnUser() {
+        console.log('wrong message');
+    }
+}
+/**
+ * Null和undefined
+ * 默认情况下null和undefined是所有类型的子类型，可以将null或undefined赋值给number类型
+ * 当指定了 --strictNullChecks标记，null和undefined只能赋值给void和他们各自
+ */
+/**
+ * 9、Never
+ * never类型表示的是那些用不存在的值的类型
+ * 是那些总会抛出异常或根本不好有返回值的函数表达式或箭头函数表达式的返回值类型
+ */
+{
+    // 返回never的函数必须存在无法到达的终点
+    function error(message) {
+        throw new Error(message);
+    }
+    // 推断的返回值为never
+    function fail() {
+        return error('something failed');
+    }
+    // 返回never的函数必须存在无法到达的终点
+    function infiniteLoop() {
+        while (true) {
+        }
+    }
+}
+create({ prop: 0 });
+create(null);
+// create(43) // Error
+// create('hello') // Error
+// create(false) // Error
+// create(undefined) // Error
+/**
+ * 11、类型断言
+ * 当你清楚的知道一个实体具有比他现有类型更确切的类型
+ * 通过类型断言告诉编译器，“相信我，我知道自己在干什么”
+ * 好比是其他语言里的类型转换，但不进行特殊的数据检查和解构，只在编译阶段起作用
+ */
+// 形式一：尖括号
+var someValue = 'this is a string';
+var strLen = someValue.length;
+// 形式二：as语法
+var len = someValue.length;
+// 注：两种形式等价，如果在TypeScript里使用JSX时，只能使用as语法
